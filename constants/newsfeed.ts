@@ -1,0 +1,133 @@
+import { NewsfeedFilter, Post } from '@/types/newsfeed';
+
+export const NEWSFEED_FILTERS: NewsfeedFilter[] = [
+  { type: 'all', label: 'For You' },
+  { type: 'following', label: 'Following' },
+  { type: 'trending', label: 'Trending' },
+];
+
+export const PREMIUM_FILTERS: NewsfeedFilter[] = [
+  { type: 'premium', label: '✨ Premium' },
+];
+
+export const MOCK_POSTS: Post[] = [
+  {
+    id: '1',
+    author: {
+      id: 'u1',
+      name: 'Sarah Johnson',
+      username: 'sarahj',
+      avatar: 'https://i.pravatar.cc/150?img=5',
+      userType: 'premium',
+      verified: true,
+    },
+    content: 'Just launched my new project! Check it out and let me know what you think 🚀',
+    images: ['https://picsum.photos/600/800?random=1'],
+    videos: ['https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'],
+    likes: 245,
+    comments: 32,
+    shares: 18,
+    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+    isPremiumContent: false,
+    tags: ['launch', 'project', 'startup'],
+  },
+  {
+    id: '2',
+    author: {
+      id: 'u2',
+      name: 'Mike Chen',
+      username: 'mikechen',
+      avatar: 'https://i.pravatar.cc/150?img=12',
+      userType: 'premium',
+      verified: true,
+    },
+    content: '✨ PREMIUM: Exclusive behind-the-scenes of our latest feature development. See how we built this from scratch!',
+    images: ['https://picsum.photos/600/800?random=2'],
+    videos: ['https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'],
+    likes: 892,
+    comments: 124,
+    shares: 67,
+    timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000),
+    isPremiumContent: true,
+    tags: ['premium', 'development', 'behindthescenes'],
+  },
+  {
+    id: '3',
+    author: {
+      id: 'u3',
+      name: 'Emma Wilson',
+      username: 'emmaw',
+      avatar: 'https://i.pravatar.cc/150?img=9',
+      userType: 'free',
+      verified: false,
+    },
+    content: 'Beautiful sunset today! 🌅 Nature never fails to amaze me.',
+    images: ['https://picsum.photos/600/400?random=3'],
+    likes: 567,
+    comments: 43,
+    shares: 29,
+    timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000),
+    isPremiumContent: false,
+  },
+  {
+    id: '4',
+    author: {
+      id: 'u4',
+      name: 'Alex Rodriguez',
+      username: 'alexr',
+      avatar: 'https://i.pravatar.cc/150?img=15',
+      userType: 'premium',
+      verified: true,
+    },
+    content: '✨ PREMIUM: Advanced tutorial on React Native performance optimization. This is a game-changer! 🔥',
+    likes: 1234,
+    comments: 189,
+    shares: 234,
+    timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000),
+    isPremiumContent: true,
+  },
+  {
+    id: '5',
+    author: {
+      id: 'u5',
+      name: 'Lisa Park',
+      username: 'lisap',
+      avatar: 'https://i.pravatar.cc/150?img=20',
+      userType: 'free',
+      verified: false,
+    },
+    content: 'Coffee and coding - the perfect combination ☕️💻',
+    images: ['https://picsum.photos/600/400?random=4'],
+    likes: 321,
+    comments: 28,
+    shares: 12,
+    timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+    isPremiumContent: false,
+  },
+  {
+    id: '6',
+    author: {
+      id: 'u6',
+      name: 'David Kim',
+      username: 'davidk',
+      avatar: 'https://i.pravatar.cc/150?img=33',
+      userType: 'premium',
+      verified: true,
+    },
+    content: 'Working on something exciting! Can\'t wait to share it with you all soon 👀',
+    likes: 678,
+    comments: 95,
+    shares: 45,
+    timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+    isPremiumContent: false,
+  },
+];
+
+export const PREMIUM_BENEFITS = [
+  'Ad-free experience',
+  'Exclusive premium content',
+  'Priority in feed',
+  'Advanced filters',
+  'Download content',
+  'Early access to new features',
+];
