@@ -1,3 +1,4 @@
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from "react";
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from "react-native";
@@ -13,15 +14,25 @@ type GradientButtonProps = {
 };
 
 export function GradientButton({ title, onPress, imageSource, className, style }: GradientButtonProps) {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
+  
   // Responsive dimensions
   const buttonHeight = height * 0.065; // ~6.5% of screen height
   const borderRadius = buttonHeight / 2;
-  const fontSize = width * 0.04; // ~4% of screen width
-  const iconSize = width * 0.06; // ~6% of screen width
+  const fontSize = 16; // Fixed 16px
+  const iconSize = 18; // Fixed 18px
+  
+  // Theme-aware colors
+  const gradientColors = isDark 
+    ? ["#FFFFFF", "#FFFFFF"] as any // White background in dark mode
+    : ["#000000", "#1D293D"] as any; // Gradient in light mode
+  
+  const textColor = isDark ? "#1E293B" : "#FFFFFF"; // Slate/800 in dark, white in light
 
   return (
     <LinearGradient
-      colors={["#000000", "#1D293D"]}
+      colors={gradientColors}
       start={{ x: 0.5, y: 1 }}
       end={{ x: 0.5, y: 0 }}
       style={[
@@ -40,7 +51,7 @@ export function GradientButton({ title, onPress, imageSource, className, style }
           onPress={onPress}
           activeOpacity={0.8}
         >
-          <Text style={[styles.text, { fontSize: fontSize }]}>{title}</Text>
+          <Text style={[styles.text, { fontSize, color: textColor }]}>{title}</Text>
           {imageSource && <Image style={{ width: iconSize, height: iconSize }} source={imageSource} />}
         </TouchableOpacity>
       </View>
@@ -64,10 +75,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
+    paddingHorizontal: 24,
+    paddingVertical: 16,
   },
   text: {
-    color: '#FFFFFF',
-    fontWeight: '500',
+    fontFamily: 'DM-Sans-Medium',
+    lineHeight: 20,
   },
 }); 

@@ -11,6 +11,42 @@ module.exports = {
         "textsecondary-dark": "#CAD5E2",
         cardtext: "#45556C",
         
+        // Background colors with dark mode support
+        background: {
+          primary: '#FFFFFF',
+          secondary: '#F8FAFC',
+          tertiary: '#F1F5F9',
+          dark: {
+            primary: '#020618',
+            secondary: '#1D293D',
+            tertiary: '#314158',
+          }
+        },
+        
+        // Text colors with dark mode support
+        text: {
+          primary: '#020618',
+          secondary: '#45556C',
+          tertiary: '#62748E',
+          quaternary: '#90A1B9',
+          dark: {
+            primary: '#FFFFFF',
+            secondary: '#CAD5E2',
+            tertiary: '#90A1B9',
+            quaternary: '#62748E',
+          }
+        },
+        
+        // Card colors with dark mode support
+        card: {
+          base: '#FFFFFF',
+          border: '#E2E8F0',
+          dark: {
+            base: 'rgba(45, 55, 72, 0.6)',
+            border: 'rgba(203, 213, 225, 0.1)',
+          }
+        },
+        
         // Primary Color (Purple Scale)
         primary: {
           50: '#F5F3FF',

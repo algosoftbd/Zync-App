@@ -1,9 +1,11 @@
-import { GradientButton } from "@/components/onboarding/GradientButton";
-import Option from "@/components/onboarding/Option";
+import { BackButton } from "@/components/onboarding/BackButton";
+import { QuestionCard } from "@/components/onboarding/QuestionCard";
+import { QuestionContainer } from "@/components/onboarding/QuestionContainer";
 import { GradientText } from "@/components/ui/GradientText";
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, ScrollView, StatusBar, View } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
@@ -15,106 +17,80 @@ const OPTIONS = [
 
 export default function Onboarding1Screen() {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
+  const cardIcon = require('@/assets/icons/QuestionCard.png');
 
   const handlePress = () => {
     router.back();
   };
 
-  // Responsive dimensions
-  const backButtonSize = width * 0.1; // ~10% of screen width
-  const backIconSize = width * 0.06; // ~6% of screen width
-  const questionCardSize = width * 0.3; // ~30% of screen width
+  // Select background image and color based on color scheme
+  const backgroundImage = isDark
+    ? require('@/assets/Background/Dark.png')
+    : require('@/assets/Background/Light.png');
+  const backgroundColor = isDark ? '#020618' : '#FFFFFF';
 
   return (
-    <View className="flex flex-col bg-white" style={{ height: height, width: width }}>
+    <View style={{ flex: 1, backgroundColor }}>
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
+
+      {/* Background Image */}
+      <Image
+        source={backgroundImage}
+        style={{
+          position: 'absolute',
+          width: width,
+          height: height,
+          top: 0,
+          left: 0,
+        }}
+        resizeMode="cover"
+      />
+
       {/* Header */}
-      <View
-        className="w-full px-4 justify-center mt-8"
-        style={{ height: height * 0.1 }}
-      >
-        <TouchableOpacity
-          onPress={handlePress}
-          activeOpacity={0.7}
-          style={{
-            width: backButtonSize,
-            height: backButtonSize,
-            borderRadius: backButtonSize / 2,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Image
-            style={{ height: backIconSize, width: backIconSize }}
-            source={require("@/assets/icons/Back-button.png")}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+      <View style={{ paddingHorizontal: 20, paddingTop: 80, paddingBottom: 14 }}>
+        <BackButton onPress={handlePress} size={24} />
       </View>
+
       {/* Title */}
-      <View style={{ marginTop: height * 0.02 }} className="flex justify-start items-center">
+      <View style={{ marginTop: 24, alignItems: 'center' }}>
         <GradientText
           text="Just a few steps"
-          colors={["#1D293D", "#FF6868", "#7F22FE"]}
+          colors={isDark ? ["#FFFFFF", "#FF6868", "#FFFFFF"] : ["#1D293D", "#FF6868", "#7F22FE"]}
           start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0.5 }}
+          end={{ x: 1, y: 1 }}
         />
       </View>
-      {/* Main Content - Scrollable for smaller screens */}
-      <ScrollView
-      className="flex flex-col mt-auto "
-        contentContainerStyle={{
-          paddingHorizontal: width * 0.04,
-          paddingBottom: height * 0.05,
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        <View
-          className="flex flex-col w-full justify-start  items-center"
-          style={{ marginTop: selectedOption != null ? height * 0.12 : height * 0.16 }}
+
+      {/* Main Content */}
+      <View style={{ flex: 1, marginTop: 24 }}>
+        <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: 0,
+            paddingBottom: 40,
+          }}
+          showsVerticalScrollIndicator={false}
         >
-          <Image
-            style={{ height: questionCardSize, width: questionCardSize }}
-            source={require('../../assets/icons/QuestionCard.png')}
-            resizeMode="contain"
-          />
-
-          <View
-            className="flex flex-col w-full gap-4"
-            style={{ marginTop: height * 0.04 }}
-          >
-            <Text className="text-textsecondary font-dm-sans">1 of 3</Text>
-
-            <View className="flex w-full justify-center" style={{ marginTop: height * 0.015 }}>
-              <Text
-                className='font-bold font-dm-sans-bold text-h3'
-              >
-                What kind of news mix do you prefer
-              </Text>
+          <View style={{ alignItems: 'center' }}>
+            <View style={{ zIndex: 1, position: 'absolute', marginTop: selectedOption != null ? 150 : 200 }}>
+              <QuestionCard iconSource={cardIcon} />
             </View>
-
-            <View style={{ gap: height * 0.015, marginBottom: height * 0.03 }}>
-              {OPTIONS.map((option, index) => (
-                <Option
-                  key={index}
-                  icon={option.icon}
-                  label={option.label}
-                  selected={selectedOption === index}
-                  onPress={() => setSelectedOption(index)}
-                />
-              ))}
+            <View style={{ marginTop: selectedOption != null ? 160 : 210 }}>
+              <QuestionContainer
+                currentStep={1}
+                totalSteps={3}
+                question="What kind of news mix do you prefer?"
+                options={OPTIONS}
+                selectedOption={selectedOption}
+                onOptionSelect={setSelectedOption}
+                showContinueButton={selectedOption !== null}
+                onContinue={() => router.push('/(onboarding)/Onboarding2')}
+              />
             </View>
-
-            {selectedOption != null && (
-              <View>
-                <GradientButton
-                  title="Continue" 
-                  onPress={() => router.push('/(onboarding)/Onboarding2')}
-                />
-              </View>
-            )}
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 }

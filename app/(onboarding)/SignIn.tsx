@@ -1,54 +1,55 @@
+import { BackButton } from "@/components/onboarding/BackButton";
 import { GradientButton } from "@/components/onboarding/GradientButton";
+import { QuestionCard } from "@/components/onboarding/QuestionCard";
 import { SecondaryButton } from "@/components/onboarding/SecondaryButton";
 import { GradientText } from '@/components/ui/GradientText';
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { router } from 'expo-router';
 import React from 'react';
-import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ImageBackground, ScrollView, StatusBar, Text, View } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
 const SignIn = () => {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
+  const colors = isDark ? Colors.dark : Colors.light;
+  const cardIcon = require('../../assets/icons/signinCard.png')
+
+  // Select background image and color based on color scheme
+  const backgroundImage = isDark
+    ? require('@/assets/Background/Dark.png')
+    : require('@/assets/Background/Light.png');
+  const backgroundColor = isDark ? Colors.dark.background.primary : Colors.light.background.primary;
+
   const handlePress = () => {
     router.back();
   };
 
   // Responsive dimensions
-  const backButtonSize = width * 0.1;
-  const backIconSize = width * 0.06;
   const signInCardSize = width * 0.23;
   const thunderIconSize = width * 0.06;
+
   return (
-    <View className='flex flex-col bg-white' style={{ height: height, width: width }}>
+    <View style={{ height: height, width: width, backgroundColor }}>
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
+
+      {/* Background Image */}
+      <ImageBackground
+        source={backgroundImage}
+        style={{
+          position: 'absolute',
+          width: width,
+          height: height,
+          top: 0,
+          left: 0,
+        }}
+        resizeMode="cover"
+      />
       {/* Header */}
-      <View
-        className="w-full mt-10 px-4 justify-center"
-        style={{ height: height * 0.1 }}
-      >
-        <TouchableOpacity
-          onPress={handlePress}
-          activeOpacity={0.7}
-          style={{
-            width: backButtonSize,
-            height: backButtonSize,
-            borderRadius: backButtonSize / 2,
-            backgroundColor: "#FFFFFF",
-            justifyContent: "center",
-            alignItems: "center",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 1 },
-            shadowOpacity: 0.1,
-            shadowRadius: 3,
-            elevation: 2,
-            borderWidth: 1,
-            borderColor: "#F0F0F0",
-          }}
-        >
-          <Image
-            style={{ height: backIconSize, width: backIconSize }}
-            source={require("@/assets/icons/Back-button.png")}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+      <View style={{ paddingHorizontal: 20, paddingTop: 80, paddingBottom: 14 }}>
+        <BackButton onPress={handlePress} size={24} />
       </View>
 
       {/* Main Content - Scrollable */}
@@ -61,32 +62,30 @@ const SignIn = () => {
         showsVerticalScrollIndicator={false}
       >
         <View className="flex flex-col w-full justify-start items-center" style={{ marginTop: height * 0.02 }}>
-          <GradientText
-            text="Let's wrap up!"
-            colors={["#1D293D", "#FF6868", "#7F22FE"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0.5 }}
-          />
-
-          <View style={{ marginTop: height * 0.1 }}>
-            <Image
-              style={{ height: signInCardSize, width: signInCardSize }}
-              source={require('../../assets/icons/signinCard.png')}
-              resizeMode="contain"
+          <View style={{ marginTop: 24, alignItems: 'center' }}>
+            <GradientText
+              text="Let's Wrap up!"
+              colors={isDark ? ["#FFFFFF", "#FF6868", "#FFFFFF"] : ["#1D293D", "#FF6868", "#7F22FE"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
             />
           </View>
 
-          <View className='flex flex-col' style={{ marginTop: height * 0.06 }}>
+          <View style={{ marginTop: height * 0.1 }}>
+            <View style={{ zIndex: 1 }} >
+              <QuestionCard iconSource={cardIcon} />
+            </View>
+          </View>
+
+          <View className='flex flex-col' style={{ marginTop: height * 0.04 }}>
             <Text
-              className='text-body-md text-center text-textsecondary font-dm-sans'
-              style={{ marginTop: height * 0.02 }}
+              className="text-body-md font-dm-sans-medium text-center" style={{ color: colors.text.secondary }}
             >
               Let's get into the world of
             </Text>
             <View className='flex flex-row justify-center items-center'>
               <Text
-                className='text-body-md text-center text-textsecondary font-dm-sans'
-
+                className="text-body-md font-dm-sans-medium text-center" style={{ color: colors.text.secondary }}
               >
                 exciting news
               </Text>
