@@ -26,11 +26,12 @@
   - Avoid anonymous functions in `renderItem` or event handlers to prevent re-renders.
   
   UI and Styling:
-  - Use consistent styling, either through `StyleSheet.create()` or Styled Components.
+  - **Always use inline styles** - Never use `StyleSheet.create()`. Write styles directly in the `style` prop as objects.
+  - **Never hardcode colors** - Always import and use colors from `constants/Colors.ts`. If a color doesn't exist, add it to Colors.ts first.
+  - **Color Management:** All colors must be defined in `constants/Colors.ts` with both light and dark mode variants. Use `getThemedColor()` helper or direct Color object access.
+  - **Dark Mode Support:** Always use `useColorScheme()` hook to detect theme and apply appropriate colors from Colors.ts.
   - Ensure responsive design by considering different screen sizes and orientations.
   - Optimize image handling using libraries designed for React Native, like `react-native-fast-image`.
-  - **Dark Mode Support:** Always use `useColorScheme()` hook and `Colors` constants for theme-aware colors.
-  - **Never hardcode colors** - reference `constants/Colors.ts` for consistent theming across light/dark modes.
   - Use appropriate `StatusBar` barStyle ('light-content' for dark mode, 'dark-content' for light mode).
   
   Best Practices:

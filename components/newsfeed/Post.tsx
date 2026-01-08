@@ -1,14 +1,17 @@
 import BottomModal from '@/components/newsfeed/BottomModal';
 import MorphButtons from '@/components/newsfeed/MorphButtons';
+import { Colors } from '@/constants/Colors';
 import { PostProps } from '@/types';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { Dimensions, Image, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, TouchableOpacity, useColorScheme, View } from 'react-native';
 
 const { width, height } = Dimensions.get("window");
 
 const Post = ({ postData }: PostProps) => {
+    const colorScheme = useColorScheme();
+    const isDark = colorScheme === 'dark';
     const [commentCount, setCommentCount] = useState(postData.commentCount);
     const [likeCount, setLikeCount] = useState(postData.likeCount);
 
@@ -25,82 +28,95 @@ const Post = ({ postData }: PostProps) => {
         setIsBookmarked(!isBookmarked);
     };
 
+    const bgColor = isDark ? Colors.dark.background.primary : Colors.light.background.primary;
+    const gradientColors = isDark 
+        ? [Colors.dark.gradient.start, Colors.dark.gradient.end]
+        : [Colors.light.gradient.start, Colors.light.gradient.end];
 
     return (
-        <View style={{ backgroundColor: 'white', height: height, width: width }}>
+        <View style={{ position: 'relative', backgroundColor: bgColor, height, width }}>
+            {/* Background Image */}
             <Image 
-                style={{ width: width, height: 500, position: 'absolute' , zIndex: -1 }} 
-                source={postData.primary_image} 
+                style={{ width: width, height: 500, position: 'absolute', top: 0, left: 0 }}
+                source={postData.primary_image}
                 resizeMode="cover"
-                
             />
+            
+            {/* Gradient Overlay */}
             <LinearGradient
-                colors={['rgba(255, 255, 255, 0)', '#FFFFFF']}
-                locations={[0.648, 1]}
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: width,
-                    height: 500,
-                    zIndex: 0,
-                }}
+                colors={gradientColors}
+                locations={[0.8, 1]}
+                style={{ position: 'absolute', top: 0, left: 0, width: width, height: 500 }}
             />
-            <View style={{ position: 'absolute', height: height, width: width, zIndex: 1 }}>
-                <View className='flex flex-col m-4 h-full ' >
-                    <View className='flex flex-row w-full items-center'>
+            
+            {/* Content Container */}
+            <View style={{ position: 'absolute', top: 62, left: 16, right: 16, bottom: 0 }}>
+                <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                    {/* Header */}
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                         <TouchableOpacity 
-                            style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}
+                            style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
                             onPress={() => router.push('/profile')}
                         >
-                            <Image style={{ width: 32, height: 32 }} source={require('../../assets/newsfeed_asset/Icons/Profile.png')} />
-                            <Image style={{ width: 52, height: 23 }} source={require('../../assets/newsfeed_asset/Icons/Zync.png')} />
+                            <View style={{ width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                                <Image 
+                                    style={{ width: 32, height: 32 }}
+                                    source={require('../../assets/newsfeed_asset/Icons/Profile.png')} 
+                                />
+                            </View>
+                            <Image 
+                                style={{ width: 52, height: 23 }}
+                                source={require('../../assets/newsfeed_asset/Icons/Zync.png')} 
+                            />
                         </TouchableOpacity>
+                        
                         {/* Header Buttons */}
-                        <View className='flex flex-row ml-auto gap-2' >
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
                             <MorphButtons 
-                                height={22} 
-                                width={22} 
+                                height={20} 
+                                width={20} 
                                 imageSource={require('../../assets/newsfeed_asset/Icons/Notification.png')}
                                 onPress={() => router.push('/notifications')}
                             />
                             <MorphButtons 
-                                height={22} 
-                                width={22} 
+                                height={20} 
+                                width={20} 
                                 imageSource={require('../../assets/newsfeed_asset/Icons/search.png')}
                                 onPress={() => router.push('/search')}
                             />
                         </View>
                     </View>
-                    <View className='mt-auto h-[74%] w-full flex flex-col gap-6' >
-                        {/* comment like share save */}
-                        <View className='flex flex-col ml-auto gap-2'>
+                    {/* Bottom Content */}
+                    <View style={{ flexDirection: 'column', alignItems: 'flex-end', gap: 24, width: '100%', marginBottom: 40 }}>
+                        {/* Vertical Action Buttons */}
+                        <View style={{ flexDirection: 'column', alignItems: 'center', gap: 12, width: 32 }}>
                             <MorphButtons
                                 imageSource={require('../../assets/newsfeed_asset/Icons/comment.png')}
                                 counts={commentCount}
-                                height={22}
-                                width={22}
+                                height={20}
+                                width={20}
                             />
                             <MorphButtons
                                 imageSource={require('../../assets/newsfeed_asset/Icons/heart.png')}
                                 counts={likeCount}
-                                height={22}
-                                width={22}
+                                height={20}
+                                width={20}
                                 onPress={handleLikePress}
                             />
                             <MorphButtons
                                 imageSource={require('../../assets/newsfeed_asset/Icons/Share.png')}
-                                height={22}
-                                width={22}
+                                height={20}
+                                width={20}
                             />
                             <MorphButtons
                                 imageSource={require('../../assets/newsfeed_asset/Icons/bookmark-lock.png')}
-                                height={22}
-                                width={22}
+                                height={20}
+                                width={20}
                                 onPress={handleBookmarkPress}
                             />
                         </View>
-                        {/* bottom modal */}
+                        
+                        {/* Bottom Modal */}
                         <BottomModal 
                             headline={postData.head_line}
                             articleNo={postData.article_no}
@@ -110,7 +126,7 @@ const Post = ({ postData }: PostProps) => {
                 </View>
             </View>
         </View>
-    )
-}
+    );
+};
 
-export default Post
+export default Post;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Dimensions, Image, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Dimensions, Image, Modal, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
 
 const { height } = Dimensions.get('window');
 
@@ -10,6 +10,8 @@ type AISummaryModalProps = {
 }
 
 const AISummaryModal = ({ visible, onClose, headline }: AISummaryModalProps) => {
+    const colorScheme = useColorScheme();
+    const isDark = colorScheme === 'dark';
     const slideAnim = React.useRef(new Animated.Value(height)).current;
 
     React.useEffect(() => {
@@ -95,8 +97,20 @@ const AISummaryModal = ({ visible, onClose, headline }: AISummaryModalProps) => 
                             <Text className='text-body-sm text-gray-500 font-dm-sans-regular mt-1 ml-2' >Watch latests developments</Text>
                         </View>
                         <View className='mt-5 py-4 flex flex-row gap-3 justify-center items-center'>
-                            <Image style={{ width: 25, height: 25 }} source={require('../../assets/newsfeed_asset/Icons/volume-off.png')} />
-                            <Image style={{ width: 25, height: 25 }} source={require('../../assets/newsfeed_asset/Icons/Link Icon.png')} />
+                            <Image 
+                                style={{ width: 25, height: 25 }} 
+                                source={isDark 
+                                    ? require('../../assets/newsfeed_asset/Icons/volume-off-Dark.png')
+                                    : require('../../assets/newsfeed_asset/Icons/volume-off-Light.png')
+                                } 
+                            />
+                            <Image 
+                                style={{ width: 25, height: 25 }} 
+                                source={isDark 
+                                    ? require('../../assets/newsfeed_asset/Icons/Link Icon-Dark.png')
+                                    : require('../../assets/newsfeed_asset/Icons/Link Icon-Light.png')
+                                } 
+                            />
                         </View>
                     </View>
                 </Animated.View>

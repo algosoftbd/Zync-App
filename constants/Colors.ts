@@ -11,7 +11,7 @@ export const Colors = {
       tertiary: '#F1F5F9',
     },
     text: {
-      primary: '#0F172B',
+      primary: '#1D293D',
       secondary: '#45556C',
       tertiary: '#62748E',
       quaternary: '#90A1B9',
@@ -20,6 +20,21 @@ export const Colors = {
       base: '#FFFFFF',
       border: '#E2E8F0',
       shadow: 'rgba(0, 0, 0, 0.08)',
+    },
+    button: {
+      border: '#E2E8F0',
+      text: '#1D293D',
+    },
+    icon: {
+      container: '#FFFFFF',
+      border: '#E2E8F0',
+    },
+    dot: '#CAD5E2',
+    highlight: '#7F22FE',
+    gradient: {
+      start: 'rgba(255, 255, 255, 0.01)',
+      end: '#FFFFFF',
+      background: ['#E9D5FF', '#FBCFE8', '#FED7AA'], // Light purple to pink to orange
     },
     option: {
       active: {
@@ -33,15 +48,12 @@ export const Colors = {
         text: '#62748E',
       },
     },
-    gradient: {
-      background: ['#E9D5FF', '#FBCFE8', '#FED7AA'], // Light purple to pink to orange
-    },
   },
   dark: {
     background: {
       primary: '#020618',
-      secondary: '#1D293D',
-      tertiary: '#314158',
+      secondary: '#0F172B',
+      tertiary: '#1D293D',
     },
     text: {
       primary: '#FFFFFF',
@@ -50,9 +62,24 @@ export const Colors = {
       quaternary: '#62748E',
     },
     card: {
-      base: 'rgba(45, 55, 72, 0.3)', // Glass effect
-      border: 'rgba(203, 213, 225, 0.1)',
+      base: '#020618',
+      border: '#0F172B',
       shadow: 'rgba(0, 0, 0, 0.3)',
+    },
+    button: {
+      border: '#1D293D',
+      text: '#FFFFFF',
+    },
+    icon: {
+      container: '#0F172B',
+      border: '#1D293D',
+    },
+    dot: '#1D293D',
+    highlight: '#7F22FE',
+    gradient: {
+      start: 'rgba(2, 6, 24, 0)',
+      end: '#020618',
+      background: ['#7F22FE', '#4D179A', '#1D293D'], // Purple gradient for dark mode
     },
     option: {
       active: {
@@ -65,9 +92,6 @@ export const Colors = {
         border: 'rgba(203, 213, 225, 0.1)',
         text: '#90A1B9',
       },
-    },
-    gradient: {
-      background: ['#7F22FE', '#4D179A', '#1D293D'], // Purple gradient for dark mode
     },
   },
 };

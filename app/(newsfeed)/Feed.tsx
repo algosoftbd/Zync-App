@@ -2,8 +2,7 @@ import Post from '@/components/newsfeed/Post';
 import { PostData } from '@/types';
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef } from 'react';
-import { Dimensions, FlatList, ViewToken } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Dimensions, FlatList, View, ViewToken } from 'react-native';
 
 const { width, height } = Dimensions.get("window");
 
@@ -14,7 +13,7 @@ export default function Feed() {
   const postsData: PostData[] = [
     {
       id: '1',
-      primary_image: require('../../assets/images/Politician.png'),
+      primary_image: {uri:'https://placehold.co/600x400/000000/020618/png'},
       head_line: "US Puts $50M Bounty on Venezuelan President Nicolás Maduro",
       article_no: 20,
       date: "7 Aug 2025",
@@ -185,7 +184,7 @@ export default function Feed() {
   }).current;
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={['top', 'bottom']}>
+    <View className="flex-1 bg-white dark:bg-[#020618]" >
       <StatusBar style="auto" />
       <FlatList
         ref={flatListRef}
@@ -205,6 +204,6 @@ export default function Feed() {
           index,
         })}
       />
-    </SafeAreaView>
-  );
+    </View>
+  ) ;
 }
